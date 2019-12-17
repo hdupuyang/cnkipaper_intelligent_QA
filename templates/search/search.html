@@ -1,0 +1,56 @@
+<html>
+
+<head>
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div id="demo">
+
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Recipient's username"
+                    aria-label="Recipient's username with two button addons" aria-describedby="button-addon4"v-model="text">
+                <div class="input-group-append" id="button-addon4">
+                        <a v-bind:href=url><button class="btn btn-outline-secondary" type="button">check</button></a>
+                </div>
+            </div>
+           
+            {% for an in ans %}
+            <h2><pre>{{ an }}</pre></h2>
+            {% endfor %}
+        </div>
+    </div>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: '#demo',
+            data: {
+                text: "",
+                url: ""
+            },
+            /*methods: {
+            },
+            computed :{
+            },*/
+            watch: {
+                text: function (val) {
+                    this.text = val;
+                    this.url = "?search=" + this.text
+                }
+            }
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"
+        integrity="sha384-L2pyEeut/H3mtgCBaUNw7KWzp5n9+4pDQiExs933/5QfaTh8YStYFFkOzSoXjlTb"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
