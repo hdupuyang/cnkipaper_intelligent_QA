@@ -1,45 +1,67 @@
 <html>
 
 <head>
-    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container">
-        <div id="demo">
+    <div id="app">
 
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Recipient's username"
-                    aria-label="Recipient's username with two button addons" aria-describedby="button-addon4"v-model="text">
-                <div class="input-group-append" id="button-addon4">
-                        <a v-bind:href=url><button class="btn btn-outline-secondary" type="button">check</button></a>
-                </div>
+
+
+
+        <div class="container">
+
+            <legend>知网近三年论文简单查询</legend>
+
+            <div class="form-group">
+                <label for="">输入你想要查询的内容</label>
+                <input type="text" class="form-control" id="" placeholder="李娜写过哪些论文" v-model="text">
             </div>
-           
-            {% for an in ans %}
-            <h2><pre>{{ an }}</pre></h2>
-            {% endfor %}
+            <button class="btn btn-primary" @click="get()">查询</button>
+
+            
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>查询结果</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="lis in list">
+                        <td class="col-lg-4">Q:< lis.qu></td>
+                        <td>A:< lis.ans></td>
+                    </tr>
+                </tbody>
+            </table>
+            
         </div>
     </div>
     <script type="text/javascript">
         var vm = new Vue({
-            el: '#demo',
+
+            el: '#app',
+            delimiters: ["<", ">"], // 可自定义符号
             data: {
                 text: "",
-                url: ""
+                url: "",
+                list: [],
             },
-            /*methods: {
-            },
-            computed :{
-            },*/
-            watch: {
-                text: function (val) {
-                    this.text = val;
-                    this.url = "?search=" + this.text
+            methods: {
+                get: function () {
+                    this.$http.get('/search/s/?search=' + this.text).then(function (res) {
+                        if (res.body.length != 0)
+                            this.list.push({ qu: this.text, ans: res.body });
+                        else
+                            this.list.push({ qu: this.text, ans: "我不到啊" });
+
+                    }, function () {
+                        console.log('请求失败处理');
+                    });
                 }
-            }
+            },
         });
     </script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

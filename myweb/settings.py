@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'paper_search',
+    'rest_framework',
+    'quickstart',
+    'snippets.apps.SnippetsConfig',
 ]
 
 MIDDLEWARE = [
@@ -79,8 +82,13 @@ WSGI_APPLICATION = 'myweb.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',  # 或者使用 mysql.connector.django
+        'NAME': 'ip',
+        'USER': 'root',
+        'PASSWORD': '981129',
+        'HOST':'localhost',
+        'PORT':'3306',
+        'OPTIONS': {'charset': 'utf8mb4'},
     }
 }
 
@@ -126,4 +134,7 @@ STATIC_URL = '/paper_search/paper_graph/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static')
 ]
-
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}

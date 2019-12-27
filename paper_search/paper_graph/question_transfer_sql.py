@@ -42,5 +42,11 @@ class question_transfer_sql:
                 for wd in journal_wds:
                     sql = "match q=(p:Paper)-[]->(j:Journal{{name:'{}'}}) return p.name".format(wd)
                     sqls.append([type, wd, sql])
+            elif type == '作者--作者':
+                wd=[]
+                for wd1 in author_wds:
+                    for wd2 in author_wds:
+                        wd=[wd1,wd2]
+
 
         return sqls

@@ -22,6 +22,7 @@ class questionClassifier:
         self.subject_qwds=['学科','哪一类']#论文--学科
         self.journal_qwds=['刊物','期刊']#论文--期刊
         self.carry_qwds=['刊登']#期刊--论文
+        self.atoa_qwds=['共同','协作']#作者--作者
 
 
 
@@ -42,10 +43,12 @@ class questionClassifier:
         #收集问句当中所涉及到的实体类型
 
         wds=self.check_types(question)
-
+        author_count=0
         types=[]
         for i in wds:
             types.append(i[1])
+            if i[1]=='author':
+                author_count+=1
         question_types=[]
         if self.check_words(self.work_qwds, question) and ('author' in types):
             question_type = '作者--单位'
@@ -64,6 +67,9 @@ class questionClassifier:
             question_types.append(question_type)
         if self.check_words(self.carry_qwds, question) and ('journal' in types):
             question_type = '期刊--论文'
+            question_types.append(question_type)
+        if author_count==2 and self.check_words(self.atoa_qwds, question):
+            question_type='作者--作者'
             question_types.append(question_type)
         data['wds'] = wds
         data['question_types']=question_types

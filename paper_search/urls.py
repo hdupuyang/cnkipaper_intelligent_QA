@@ -5,5 +5,6 @@ from . import views
 app_name = 'article'
 
 urlpatterns = [
-    path('',views.demo.as_view(),name='demo')
+    path('',views.demo.as_view(),name='demo'),
+    path('s/',views.neo4jsearch.as_view(),name='neo4jsearch')
 ]
